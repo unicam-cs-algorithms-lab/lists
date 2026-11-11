@@ -1,50 +1,28 @@
 package it.unicam.cs.asdl.eslists;
 
 /**
- * Esempi di uso delle {@code ADTConsList<E>}.
- * 
- * @author Luca Tesei
- *
+ * Programma dimostrativo eseguibile anche prima di completare i TODO.
+ * Gli esempi opzionali sono commentati perché dipendono dai metodi ricorsivi
+ * che gli studenti devono ancora realizzare.
  */
 public class ADTListsExamples {
 
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-      ADTConsList<Integer> l1 = ADTConsList.EMPTY_LIST.cons(3);
-      ADTConsList<Integer> l2 = l1.cons(4);
-      ADTConsList<Integer> l3 = l2.cons(5);
-      ADTConsList<Integer> l4 = l3.cons(4);
-      ADTConsList<Integer> l5 = l4.cons(6);
-      ADTConsList<Integer> l6 = l5.cons(7);
-      ADTConsList<Integer> l7 = l6.cons(8);
-      ADTConsList<Integer> l8 = l7.cons(9);
-      System.out.println(l8.print());
-      if (l8.find(4))
-          System.out.println("4 è contenuto");
-      else System.out.println("4 non è contenuto");
-      ADTConsList<Integer> l9 = l8.removeFirst(4);
-      System.out.println(l9.print());
-      ADTConsList<Integer> l10 = l8.removeAll(4);
-      System.out.println(l10.print());
-      if (l10.find(4))
-          System.out.println("4 è contenuto");
-      else System.out.println("4 non è contenuto");
-      ADTConsList<Integer> l11 = l3.cons(6);
-      ADTConsList<Integer> l12 = l11.cons(10);
-      ADTConsList<Integer> l13 = l12.cons(11);
-      System.out.println(l13.print());
-      ADTConsList<Integer> l14 = l13.append(l10);
-      System.out.println("Append: " + l14.print());
-      System.out.println("Reversed: " + l14.reverse().print());
-      System.out.println("Aggiornato il primo 6 con 100: " + l14.updateFirst(6, 100).print());
-      System.out.println("Aggiornati tutti i 6 con 100: " + l14.updateAll(6, 100).print());
-      ADTConsList<Integer> l15 = ADTConsList.EMPTY_LIST.cons(1);
-      ADTConsList<Integer> l16 = l15.cons(1);
-      System.out.println(l16.print());
-      ADTConsList<Integer> l17 = l16.removeAll(1);
-      if (l17.isEmpty())
-          System.out.println("Lista vuota");
-      else System.out.println("Lista non vuota");
-    }
+        ADTConsList<Integer> vuota = ADTConsList.empty();
+        ADTConsList<Integer> originale = vuota.cons(3).cons(2).cons(1);
+        // Costruisco una nuova testa: originale resta immutata.
+        ADTConsList<Integer> estesa = originale.cons(0);
+        System.out.println("Originale: " + originale.print()); // 1 2 3
+        System.out.println("Estesa: " + estesa.print());       // 0 1 2 3
+        System.out.println("Coda condivisa: " + (estesa.rest() == originale));
+        System.out.println("Trova 2: " + originale.find(2));
+        System.out.println("Senza il primo 2: " + originale.removeFirst(2).print());
 
+        // Dopo avere completato i TODO in ADTConsList, provare anche:
+        // System.out.println(originale.updateFirst(2, 7).print());
+        // System.out.println(originale.updateAll(2, 7).print());
+        // System.out.println(originale.removeAll(2).print());
+        // System.out.println(originale.append(estesa).print());
+        // System.out.println(originale.reverse().print());
+    }
 }

@@ -1,7 +1,10 @@
 package it.unicam.cs.asdl.eslists;
 
 /**
- * Classe che implementa {@code ADTConsList<E>} con due campi immutabili.
+ * Nodo non vuoto della lista ricorsiva persistente: rappresenta
+ * {@code Cons(first, rest)}. I due riferimenti sono {@code final}; non esistono
+ * setter. Due liste possono condividere la stessa coda senza copiarla.
+ * Gli oggetti {@code E} eventualmente mutabili non vengono copiati.
  * 
  * @author Luca Tesei
  *
@@ -21,10 +24,8 @@ public final class ConsList<E> implements ADTConsList<E> {
      * @param first
      *                 l'elemento da inserire nella lista.
      */
-    @SuppressWarnings("unchecked")
     public ConsList(E first) {
-        this.first = first;
-        this.rest = ADTConsList.EMPTY_LIST;
+        this(first, ADTConsList.<E>empty());
     }
 
     /**
@@ -35,8 +36,10 @@ public final class ConsList<E> implements ADTConsList<E> {
      * @param rest la lista di partenza
      */
     public ConsList(E first, ADTConsList<E> rest) {
-        this.first = first;
-        this.rest = rest;
+        // Invariante: un nodo non vuoto ha sempre una coda valida e
+        // un elemento non null (contratto semplificato dell'esercitazione).
+        this.first = java.util.Objects.requireNonNull(first, "first null");
+        this.rest = java.util.Objects.requireNonNull(rest, "rest null");
     }
 
     @Override
@@ -56,6 +59,7 @@ public final class ConsList<E> implements ADTConsList<E> {
 
     @Override
     public ADTConsList<E> cons(E first) {
+        // Il nodo corrente diventa la coda della nuova lista: persistenza.
         return new ConsList<E>(first, this);
     }
 

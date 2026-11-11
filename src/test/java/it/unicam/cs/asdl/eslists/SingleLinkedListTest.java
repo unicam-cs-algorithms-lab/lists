@@ -1,15 +1,16 @@
 package it.unicam.cs.asdl.eslists;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SingleLinkedListTest {
 
+    // Verifica ricerca lineare e divieto dei valori null.
     @Test
     void testContains() {
         SingleLinkedList<Integer> list = new SingleLinkedList<>();
@@ -20,6 +21,7 @@ class SingleLinkedListTest {
         assertFalse(list.contains(2));
     }
 
+    // Verifica accodamento e aggiornamento coerente della dimensione.
     @Test
     void testAddE() {
         SingleLinkedList<Integer> list = new SingleLinkedList<>();
@@ -41,6 +43,7 @@ class SingleLinkedListTest {
         assertTrue(list.size() == 4);
     }
 
+    // La rimozione per oggetto elimina soltanto la prima occorrenza.
     @Test
     void testRemoveObject() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -61,6 +64,7 @@ class SingleLinkedListTest {
         assertTrue(list.contains("Pluto"));
     }
 
+    // Dopo clear la lista è vuota e riutilizzabile.
     @Test
     void testClear() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -81,6 +85,7 @@ class SingleLinkedListTest {
         assertTrue(list.isEmpty());
     }
 
+    // Accesso per indice e controllo dei limiti.
     @Test
     void testGet() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -102,6 +107,7 @@ class SingleLinkedListTest {
         assertTrue(list.get(4).equals("5"));
     }
 
+    // Set modifica item senza alterare il numero di nodi.
     @Test
     void testSet() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -131,6 +137,7 @@ class SingleLinkedListTest {
         assertTrue(list.size() == 6);
     }
 
+    // Inserimento agli indici 0, intermedi e size.
     @Test
     void testAddIntE() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -159,6 +166,7 @@ class SingleLinkedListTest {
         assertTrue(list.size() == 7);
     }
 
+    // Rimozione degli estremi e di nodi interni.
     @Test
     void testRemoveInt() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -191,6 +199,7 @@ class SingleLinkedListTest {
         assertTrue(list.size() == 2);
     }
 
+    // Prima occorrenza, con duplicati.
     @Test
     void testIndexOf() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -208,6 +217,7 @@ class SingleLinkedListTest {
         assertTrue(list.indexOf("0") == -1);
     }
 
+    // Ultima occorrenza, con duplicati.
     @Test
     void testLastIndexOf() {
         SingleLinkedList<String> list = new SingleLinkedList<String>();
@@ -225,6 +235,7 @@ class SingleLinkedListTest {
         assertTrue(list.lastIndexOf("0") == -1);
     }
     
+    // Un iteratore visita gli elementi in ordine e reagisce a modifiche strutturali.
     @Test
     final void testIterator() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -241,16 +252,17 @@ class SingleLinkedListTest {
         }
         Iterator<Integer> itr = sLL.iterator();
         assertTrue(itr.hasNext());
-        assertTrue(new Integer(0).equals(itr.next()));
+        assertTrue(Integer.valueOf(0).equals(itr.next()));
         assertTrue(itr.hasNext());
-        assertTrue(new Integer(1).equals(itr.next()));
+        assertTrue(Integer.valueOf(1).equals(itr.next()));
         for (int i = 0; i < 7; i++) {
             assertTrue(itr.hasNext());
-            assertTrue(new Integer(2).equals(itr.next()));
+            assertTrue(Integer.valueOf(2).equals(itr.next()));
         }
         assertFalse(itr.hasNext());
     }
 
+    // Ricerca su lista con elementi ripetuti.
     @Test
     final void testContains1() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -264,6 +276,7 @@ class SingleLinkedListTest {
         assertFalse(sLL.contains(3));
     }
 
+    // Rimozione assente/presente con duplicati.
     @Test
     final void testRemove() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -277,6 +290,7 @@ class SingleLinkedListTest {
         assertEquals(8, sLL.size());
     }
 
+    // Una lista svuotata è equivalente a una nuova lista vuota.
     @Test
     final void testClear1() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -290,6 +304,7 @@ class SingleLinkedListTest {
         assertEquals(new SingleLinkedList<>(), sLL);
     }
 
+    // Accesso a posizioni in lista non banale.
     @Test
     final void testGet1() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -298,12 +313,13 @@ class SingleLinkedListTest {
         for (int i = 0; i < 7; i++) {
             sLL.add(2);
         }
-        assertTrue(new Integer(0).equals(sLL.get(0)));
-        assertTrue(new Integer(1).equals(sLL.get(1)));
-        assertTrue(new Integer(2).equals(sLL.get(3)));
-        assertTrue(new Integer(2).equals(sLL.get(6)));
+        assertTrue(Integer.valueOf(0).equals(sLL.get(0)));
+        assertTrue(Integer.valueOf(1).equals(sLL.get(1)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(3)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(6)));
     }
 
+    // Aggiornamento di un elemento senza cambiare size.
     @Test
     final void testSet1() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -313,11 +329,12 @@ class SingleLinkedListTest {
             sLL.add(2);
         }
         assertThrows(NullPointerException.class, () -> sLL.set(0, null));
-        assertTrue(new Integer(2).equals(sLL.set(4, 3)));
-        assertTrue(new Integer(9).equals(sLL.size()));
-        assertTrue(new Integer(3).equals(sLL.get(4)));
+        assertTrue(Integer.valueOf(2).equals(sLL.set(4, 3)));
+        assertTrue(Integer.valueOf(9).equals(sLL.size()));
+        assertTrue(Integer.valueOf(3).equals(sLL.get(4)));
     }
 
+    // Inserimento/rimozione nello stesso indice e integrità della catena.
     @Test
     final void testAddAndRemoveAtIndex() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
@@ -328,15 +345,16 @@ class SingleLinkedListTest {
         }
         assertThrows(NullPointerException.class, () -> sLL.add(0, null));
         sLL.add(5, 5);
-        assertTrue(new Integer(2).equals(sLL.get(4)));
-        assertTrue(new Integer(5).equals(sLL.get(5)));
-        assertTrue(new Integer(2).equals(sLL.get(6)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(4)));
+        assertTrue(Integer.valueOf(5).equals(sLL.get(5)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(6)));
         assertTrue(sLL.remove(5) == 5);
-        assertTrue(new Integer(2).equals(sLL.get(4)));
-        assertTrue(new Integer(2).equals(sLL.get(5)));
-        assertTrue(new Integer(2).equals(sLL.get(6)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(4)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(5)));
+        assertTrue(Integer.valueOf(2).equals(sLL.get(6)));
     }
 
+    // Ricerca di prima e ultima posizione con duplicati.
     @Test
     final void testIndexes() {
         SingleLinkedList<Integer> sLL = new SingleLinkedList<>();
